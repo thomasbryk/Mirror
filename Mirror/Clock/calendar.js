@@ -188,7 +188,7 @@ function callPopulateHTML (pre, prevEventDate, currEvent) {
 
 function populateHTML(currEvent, eventDate, prevEventDate, pre) {
 
-    var eventDateString = (eventDate.getMonth() + 1) + "/" + (eventDate.getDate());
+    var eventDateString = (eventDate.getMonth() + 1) + "/" + (eventDate.getDate()+1);
 
     if (prevEventDate == null || prevEventDate.getDate() != eventDate.getDate()){
         pre.innerHTML += '<p class="dateLine">' + eventDateString +'</p><hr></br style="font-size:25px">';
