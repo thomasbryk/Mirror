@@ -1,4 +1,4 @@
 # SmartMirror
 
-[Weather](/tree/master/Mirror/Weather/index.php)
-[Clock](/tree/master/Mirror/Clock/index.php)
+[Weather](https://github.com/thomasbryk/SmartMirror/tree/master/Mirror/Weather/index.php)
+[Clock](https://github.com/thomasbryk/SmartMirror/tree/master/Mirror/Clock/index.php)
