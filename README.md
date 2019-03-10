@@ -1,4 +1,4 @@
 # SmartMirror
 
-[Weather](../Mirror/Weather/index.php)
-[Clock](../Mirror/Clock/index.php)
+[Weather](..SmartMirror/master/Mirror/Weather/index.php)
+[Clock](..SmartMirror/master/Mirror/Clock/index.php)
