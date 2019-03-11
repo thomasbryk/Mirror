@@ -1,10 +1,27 @@
 // v3.1.0
 //Docs at http://simpleweatherjs.com
+
+const weatherUrl='https://api.darksky.net/forecast/a60333b73010112aefa99796dc11cd2a/45.369408,-75.700660';
+
 $(document).ready(function () {
     getWeather(); //Get the initial weather.
     setInterval(getWeather, 600000); //Update the weather every 10 minutes.
 });
 function getWeather() {
+    var Http = new XMLHttpRequest();
+    var weather = null;
+    $.ajax({
+        url: weatherUrl,
+        type: "GET",
+        success : function(result){
+            console.log(result)
+            weather = result;
+        },
+        error : function(error){
+            console.log(`Error ${error}`)
+        }
+    });
+
     $.simpleWeather({
         location: 'Ottawa, ON',
         woeid: '',
