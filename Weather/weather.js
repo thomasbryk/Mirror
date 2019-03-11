@@ -10,7 +10,7 @@ function getWeather() {
     var consumer_key = 'dj0yJmk9UlJsbnBQTks0SGdQJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWFm';
     var consumer_secret = 'c25c0605b09e1f4502e285b97615d33ed4e85227';
     var concat = '&';
-    var query = { 'location': 'ottawa,on', 'format': 'json' };
+    var query = { 'location': 'ottawa,on', 'format': 'json', 'u': 'c' };
     var oauth = {
         'oauth_consumer_key': consumer_key,
         'oauth_nonce': Math.random().toString(36).substring(2),
@@ -47,7 +47,7 @@ function getWeather() {
         method: 'GET',
         success: function (weather) {
             console.log(weather);
-            html = '<h2><i class="icon-' + weather.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+            html = '<h2><i class="icon-' + weather.current_observation.condition.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
             if (weather.temp > 30) {
                 html += '<span class="hot"> ' + weather.temp + '&deg;' + weather.units.temp + '</span></h2>';
             } else if (weather.temp < -10) {
