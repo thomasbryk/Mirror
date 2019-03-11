@@ -1,32 +1,52 @@
-// v3.1.0
-//Docs at http://simpleweatherjs.com
-
-const weatherUrl='https://api.darksky.net/forecast/a60333b73010112aefa99796dc11cd2a/45.369408,-75.700660';
-
 $(document).ready(function () {
     getWeather(); //Get the initial weather.
     setInterval(getWeather, 600000); //Update the weather every 10 minutes.
 });
-function getWeather() {
-    var Http = new XMLHttpRequest();
-    var weather = null;
-    $.ajax({
-        url: weatherUrl,
-        type: "GET",
-        success : function(result){
-            console.log(result)
-            weather = result;
-        },
-        error : function(error){
-            console.log(`Error ${error}`)
-        }
-    });
 
-    $.simpleWeather({
-        location: 'Ottawa, ON',
-        woeid: '',
-        unit: 'c',
+function getWeather() {
+    var url = 'https://weather-ydn-yql.media.yahoo.com/forecastrss';
+    var method = 'GET';
+    var app_id = 'P12LqJ7k';
+    var consumer_key = 'dj0yJmk9UlJsbnBQTks0SGdQJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWFm';
+    var consumer_secret = 'c25c0605b09e1f4502e285b97615d33ed4e85227';
+    var concat = '&';
+    var query = { 'location': 'ottawa,on', 'format': 'json' };
+    var oauth = {
+        'oauth_consumer_key': consumer_key,
+        'oauth_nonce': Math.random().toString(36).substring(2),
+        'oauth_signature_method': 'HMAC-SHA1',
+        'oauth_timestamp': parseInt(new Date().getTime() / 1000).toString(),
+        'oauth_version': '1.0'
+    };
+
+    var merged = {};
+    $.extend(merged, query, oauth);
+    // Note the sorting here is required
+    var merged_arr = Object.keys(merged).sort().map(function (k) {
+        return [k + '=' + encodeURIComponent(merged[k])];
+    });
+    var signature_base_str = method
+        + concat + encodeURIComponent(url)
+        + concat + encodeURIComponent(merged_arr.join(concat));
+
+    var composite_key = encodeURIComponent(consumer_secret) + concat;
+    var hash = CryptoJS.HmacSHA1(signature_base_str, composite_key);
+    var signature = hash.toString(CryptoJS.enc.Base64);
+
+    oauth['oauth_signature'] = signature;
+    var auth_header = 'OAuth ' + Object.keys(oauth).map(function (k) {
+        return [k + '="' + oauth[k] + '"'];
+    }).join(',');
+
+    $.ajax({
+        url: url + '?' + $.param(query),
+        headers: {
+            'Authorization': auth_header,
+            'X-Yahoo-App-Id': app_id
+        },
+        method: 'GET',
         success: function (weather) {
+            console.log(weather);
             html = '<h2><i class="icon-' + weather.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
             if (weather.temp > 30) {
                 html += '<span class="hot"> ' + weather.temp + '&deg;' + weather.units.temp + '</span></h2>';
@@ -60,4 +80,4 @@ function getWeather() {
             $("#weather").html('<li>' + error + '</li>');
         }
     });
-};
+}
