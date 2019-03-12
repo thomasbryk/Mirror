@@ -22,7 +22,9 @@ var calendarIcons = {
     "School": 'school',
     "Work": 'work',
     "Holidays in Canada": "holiday",
-    "Toronto Maple Leafs": "hockey"
+    "Toronto Maple Leafs": "hockey",
+    "bryksters@hotmail.com": "event",
+    "Event": "event"
 }
 
 /**
@@ -112,6 +114,12 @@ function listUpcomingEvents(calID, calendar) {
 }
 
 function IterateOverCalendars(calendars) {
+    for (var i = 0; i < calendars.length; i++) {
+        if (calendars[i].summary == "Friends' Birthdays") {
+            calendars.splice(i, 1);
+            break;
+        }
+    }
     totalEventsCount = calendars.length * maxResults;
     for (var i = 0; i < calendars.length; i++) {
         console.log(calendars[i].summary);
@@ -155,59 +163,70 @@ function formatAMPM(date) {
     var ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
-  }
+}
 
 function displayEvents() {
     var pre = document.getElementById('calendar');
     var prevEventDate = null;
-    
-    if (savedEvents.length >= 4) {
-        for (i = 0; i < 5; i++) {
-            prevEventDate = callPopulateHTML (pre, prevEventDate, savedEvents[i]);
-        }
+    var loopAmount = savedEvents.length;
+
+    if (loopAmount >= 4) {
+        loopAmount = 5;
     }
-    else {
-        for (i = 0; i < savedEvents.length; i++) {
-            prevEventDate = callPopulateHTML (pre, prevEventDate, savedEvents[i]);
-        }
+
+    for (i = 0; i < loopAmount; i++) {
+        prevEventDate = callPopulateHTML(pre, prevEventDate, savedEvents[i]);
     }
 }
 
-function callPopulateHTML (pre, prevEventDate, currEvent) {
-    var eventDate = new Date(currEvent.event.start.date);
-    if (isNaN(eventDate.valueOf()))
-        eventDate = new Date(currEvent.event.start.dateTime);
+function callPopulateHTML(pre, prevEventDate, currEvent) {
+    console.log(currEvent.event.start.dateTime);
+    var eventDate = new Date(currEvent.event.start.dateTime);
+    var isAllDay = false;
 
-    populateHTML(currEvent, eventDate, prevEventDate, pre);
+    if (isNaN(eventDate.valueOf())){
+        console.log(currEvent.event.start.date);
+        eventDate = new Date(currEvent.event.start.date);
+        eventDate.setDate(eventDate.getDate() + 1);
+        isAllDay = true;
+    }
+  
+    populateHTML(currEvent, eventDate, prevEventDate, pre, isAllDay);
 
     return eventDate;
 }
 
-function populateHTML(currEvent, eventDate, prevEventDate, pre) {
+function populateHTML(currEvent, eventDate, prevEventDate, pre, isAllDay) {
 
-    var eventDateString = (eventDate.getMonth() + 1) + "/" + (eventDate.getDate()+1);
+    var eventDateString = (eventDate.getMonth() + 1) + "/" + (eventDate.getDate());
+    console.log(eventDate.getDate());
 
-    if (prevEventDate == null || prevEventDate.getDate() != eventDate.getDate()){
-        pre.innerHTML += '<p class="dateLine">' + eventDateString +'</p><hr></br style="font-size:25px">';
+    if (prevEventDate == null || prevEventDate.getDate() != eventDate.getDate()) {
+        pre.innerHTML += '<p class="dateLine">' + eventDateString + '</p><hr></br style="font-size:25px">';
     }
 
     pre.innerHTML += '&nbsp&nbsp'
 
-    if (eventDate.getHours() != null || eventDate.getHours() != ""){
+    if (eventDate.getHours() != null || eventDate.getHours() != "") {
         pre.innerHTML += '<p class="event_text" style="opacity:0.5;">'
     }
-    
+
     pre.innerHTML += '<p class="event_text"><img src="' + getCalendarIcon(currEvent.calendar.summary) + '" class="calIcon">&nbsp&nbsp</p>';
     pre.innerHTML += '<p class="event_text">' + currEvent.event.summary + '</p>';
 
-    var timeText = formatAMPM(eventDate);
-
+    var timeText = "";  
+    if (!isAllDay)
+        timeText = formatAMPM(eventDate);
     pre.innerHTML += '<p class="time_text">' + timeText + '</p></br>';
 }
 
 function getCalendarIcon(calName) {
-    return ("Icons/" + calendarIcons[calName] + ".png");
+    icon = calendarIcons[calName];
+    if (icon == null) {
+        icon = calendarIcons["Event"];
+    }
+    return ("Icons/" + icon + ".png");
 }
