@@ -215,7 +215,12 @@ function populateHTML(currEvent, eventDate, prevEventDate, pre, isAllDay) {
     }
 
     pre.innerHTML += '<p class="event_text"><img src="' + getCalendarIcon(currEvent.calendar.summary) + '" class="calIcon">&nbsp&nbsp</p>';
-    pre.innerHTML += '<p class="event_text">' + currEvent.event.summary + '</p>';
+    
+    var eventSummaryText = currEvent.event.summary;
+    if (eventSummaryText.length > 44){
+        eventSummaryText = eventSummaryText.substr(0,43) + "...";
+    }
+    pre.innerHTML += '<p class="event_text">' + eventSummaryText + '</p>';
 
     var timeText = "";  
     if (!isAllDay)
