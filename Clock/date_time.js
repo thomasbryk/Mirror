@@ -14,10 +14,17 @@ function startTime() {
     var sec = today.getSeconds();
     min = checkTime(min);
     sec = checkTime(sec);
+    
+    var fixedHour = hour;
+    if (hour > 12)
+        fixedHour = hour - 12;
+    else if (hour == 0)
+        fixedHour = 12;
+
     if (hour > 12){
-        document.getElementById('time').innerHTML = '<table><tr><td><p class=time>' + (hour-12) + ":" + min + '</p></td><td><p class=small_text>' + sec + '</p><p class=small_text>' + "PM" + '</p></td></tr></table>';
+        document.getElementById('time').innerHTML = '<table><tr><td><p class=time>' + fixedHour + ":" + min + '</p></td><td><p class=small_text>' + sec + '</p><p class=small_text>' + "PM" + '</p></td></tr></table>';
      } else{
-       document.getElementById('time').innerHTML = '<table><tr><td><p class=time>' + hour + ":" + min + '</p></td><td><p class=small_text>' + sec + '</p><p class=small_text>' + "AM" + '</p></td></tr></table>';
+       document.getElementById('time').innerHTML = '<table><tr><td><p class=time>' + fixedHour + ":" + min + '</p></td><td><p class=small_text>' + sec + '</p><p class=small_text>' + "AM" + '</p></td></tr></table>';
     }
     var t = setTimeout(startTime, 500);
 }
