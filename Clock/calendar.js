@@ -127,11 +127,17 @@ function IterateOverCalendars(calendars) {
     }
 }
 
-function runCustomIterations() {
-    gapi.client.calendar.calendarList.list(
-    ).execute(function (resp) {
-        IterateOverCalendars(resp.items);
-    });
+async function runCustomIterations() {
+    while (true) {
+        savedEvents.length = 0;
+        totalEventsCount = 0;
+
+        await gapi.client.calendar.calendarList.list(
+        ).execute(function (resp) {
+            IterateOverCalendars(resp.items);
+        });
+        await wait(60000);
+    }
 }
 
 function sortDates(eventCalendarItem1, eventCalendarItem2) {
@@ -173,6 +179,8 @@ function displayEvents() {
     var prevEventDate = null;
     var loopAmount = savedEvents.length;
 
+    pre.innerHTML = "";
+
     if (loopAmount >= 4) {
         loopAmount = 5;
     }
@@ -183,17 +191,15 @@ function displayEvents() {
 }
 
 function callPopulateHTML(pre, prevEventDate, currEvent) {
-    console.log(currEvent.event.start.dateTime);
     var eventDate = new Date(currEvent.event.start.dateTime);
     var isAllDay = false;
 
-    if (isNaN(eventDate.valueOf())){
-        console.log(currEvent.event.start.date);
+    if (isNaN(eventDate.valueOf())) {
         eventDate = new Date(currEvent.event.start.date);
         eventDate.setDate(eventDate.getDate() + 1);
         isAllDay = true;
     }
-  
+
     populateHTML(currEvent, eventDate, prevEventDate, pre, isAllDay);
 
     return eventDate;
@@ -202,7 +208,6 @@ function callPopulateHTML(pre, prevEventDate, currEvent) {
 function populateHTML(currEvent, eventDate, prevEventDate, pre, isAllDay) {
 
     var eventDateString = (eventDate.getMonth() + 1) + "/" + (eventDate.getDate());
-    console.log(eventDate.getDate());
 
     if (prevEventDate == null || prevEventDate.getDate() != eventDate.getDate()) {
         pre.innerHTML += '<p class="dateLine">' + eventDateString + '</p><hr></br style="font-size:25px">';
@@ -215,14 +220,14 @@ function populateHTML(currEvent, eventDate, prevEventDate, pre, isAllDay) {
     }
 
     pre.innerHTML += '<p class="event_text"><img src="' + getCalendarIcon(currEvent.calendar.summary) + '" class="calIcon">&nbsp&nbsp</p>';
-    
+
     var eventSummaryText = currEvent.event.summary;
-    if (eventSummaryText.length > 44){
-        eventSummaryText = eventSummaryText.substr(0,43) + "...";
+    if (eventSummaryText.length > 44) {
+        eventSummaryText = eventSummaryText.substr(0, 43) + "...";
     }
     pre.innerHTML += '<p class="event_text">' + eventSummaryText + '</p>';
 
-    var timeText = "";  
+    var timeText = "";
     if (!isAllDay)
         timeText = formatAMPM(eventDate);
     pre.innerHTML += '<p class="time_text">' + timeText + '</p></br>';
@@ -234,4 +239,10 @@ function getCalendarIcon(calName) {
         icon = calendarIcons["Event"];
     }
     return ("Icons/" + icon + ".png");
+}
+
+async function wait(ms) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
 }
