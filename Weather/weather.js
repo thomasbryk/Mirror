@@ -58,21 +58,21 @@ function getWeather() {
             }
             html += '<span class=info>';
             html += '<li class="city">' + weather.location.city + ', ' + weather.location.region + '</li>';
-            html += '<li class="forecastDescription">' + 'Currently ' + weather.current_observation.condition.text + ' and feels like ' + weather.current_observation.wind.chill + '&deg;' + units + '. Todays forecast is ' + weather.forecasts[0].text + '.</li>';
+            html += '<li class="forecastDescription">' + 'Currently ' + weather.current_observation.condition.text.toLowerCase() + ' and feels like ' + weather.current_observation.wind.chill + '&deg;' + units + '. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + '.</li>';
             if ((weather.current_observation.astronomy.sunrise).charAt(3) == ' ') {
                 weather.current_observation.astronomy.sunrise = weather.current_observation.astronomy.sunrise.slice(0, 2) + "0" + weather.current_observation.astronomy.sunrise.slice(2);
             }
             if ((weather.current_observation.astronomy.sunset).charAt(3) == ' ') {
                 weather.current_observation.astronomy.sunset = weather.current_observation.astronomy.sunset.slice(0, 2) + "0" + weather.current_observation.astronomy.sunset.slice(2);
             }
-            html += '<li style="font-size:14pt;"><i2 class="icon-' + 34 + '"></i2> ' + weather.current_observation.astronomy.sunrise + '';
+            html += '<li class="sunRiseSet"><i2 class="icon-' + 34 + '"></i2> ' + weather.current_observation.astronomy.sunrise + '';
             html += '&nbsp&nbsp&nbsp <i2 class="icon-' + 31 + '"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
             html += '</span>';
 
             html += '<span class=week>';
             html += '<table style="height:100%;">';
             for (var i = 0; i < 5; i++) {
-                html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '; font-family:Roboto-Light;"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="icon-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
+                html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="icon-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
             }
             html += '</table></span>';
             $("#weather").html(html);

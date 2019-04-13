@@ -12,7 +12,7 @@ var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 
-var maxResults = 5;
+var maxResults = 4;
 var totalEventsCount = 0;
 var savedEvents = [];
 var calendarIcons = {
@@ -177,15 +177,10 @@ function formatAMPM(date) {
 function displayEvents() {
     var pre = document.getElementById('calendar');
     var prevEventDate = null;
-    var loopAmount = savedEvents.length;
 
     pre.innerHTML = "";
 
-    if (loopAmount >= 4) {
-        loopAmount = 5;
-    }
-
-    for (i = 0; i < loopAmount; i++) {
+    for (i = 0; i < maxResults; i++) {
         prevEventDate = callPopulateHTML(pre, prevEventDate, savedEvents[i]);
     }
 }
