@@ -49,10 +49,10 @@ function initClient() {
         // Listen for sign-in state changes.
         authorizeButton.onclick = handleAuthClick;
         signoutButton.onclick = handleSignoutClick;
-        //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
         // Handle the initial sign-in state.
-        //updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     });
 }
 
@@ -75,7 +75,6 @@ function updateSigninStatus(isSignedIn) {
  */
 function handleAuthClick(event) {
     gapi.auth2.getAuthInstance().signIn();
-    runCustomIterations();
 }
 
 /**
@@ -129,16 +128,16 @@ function IterateOverCalendars(calendars) {
 }
 
 async function runCustomIterations() {
-    //while (true) {
+    while (true) {
         savedEvents.length = 0;
         totalEventsCount = 0;
 
-        gapi.client.calendar.calendarList.list(
+        await gapi.client.calendar.calendarList.list(
         ).execute(function (resp) {
             IterateOverCalendars(resp.items);
         });
-        //await wait(60000);
-    //}
+        await wait(60000);
+    }
 }
 
 function sortDates(eventCalendarItem1, eventCalendarItem2) {
