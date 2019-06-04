@@ -32,6 +32,8 @@ var calendarIcons = {
  */
 function handleClientLoad() {
     alert("HEY1");
+    var pre = document.getElementById('calendar');
+    pre.innerHTML = '<p class="eventText">Hey</p>';
     gapi.load('client:auth2', initClient);
 }
 
