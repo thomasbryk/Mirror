@@ -34,6 +34,10 @@ function handleClientLoad() {
     gapi.load('client:auth2', initClient);
 }
 
+function onSignIn(googleUser) {
+    runCustomIterations();
+  }
+
 /**
  *  Initializes the API client library and sets up sign-in state
  *  listeners.

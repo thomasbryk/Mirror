@@ -3,18 +3,21 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="google-signin-client_id" content="1080674062554-3ftochhcdnkretsfsie0q4qul328f6fq.apps.googleusercontent.com">
       <link rel="stylesheet" href="clock.css">
       <title>SmartMirror - Clock</title>
     </script>
    </head>
    <body onload="startTime()">
       <script src="../scripts/jquery.min.js"></script>
+      <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
       <script src="date_time.js"></script>
       <div id="date"></div>
       <div id="time"></div>
 
       <!--Add buttons to initiate auth sequence and sign out-->
       <button id="authorize_button">Authorize</button>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
       <button id="signout_button" style="display: none;">Sign Out</button>
 
       <script src = "calendar.js"></script>
