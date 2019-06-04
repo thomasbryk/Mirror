@@ -128,7 +128,7 @@ function IterateOverCalendars(calendars) {
 }
 
 async function runCustomIterations() {
-    while (true) {
+    //while (true) {
         savedEvents.length = 0;
         totalEventsCount = 0;
 
@@ -137,7 +137,7 @@ async function runCustomIterations() {
             IterateOverCalendars(resp.items);
         });
         //await wait(60000);
-    }
+    //}
 }
 
 function sortDates(eventCalendarItem1, eventCalendarItem2) {
