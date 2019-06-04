@@ -31,8 +31,6 @@ var calendarIcons = {
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
-    var pre = document.getElementById('calendar');
-    pre.innerHTML = 'HEYHEYHEYHEYHEYHEY';
     gapi.load('client:auth2', initClient);
 }
 

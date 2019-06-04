@@ -5,20 +5,19 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="clock.css">
       <title>SmartMirror - Clock</title>
+
+      <script src="../scripts/jquery.min.js"></script>
+      <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"> </script>
+      <script src="date_time.js"></script>
+      <script src = "calendar.js"></script>
    </head>
    <body onload="startTime()">
-      <script src="../scripts/jquery.min.js"></script>
-      <script async defer src="https://apis.google.com/js/api.js" onload="handleClientLoad()">
-    </script>
-      <script src="date_time.js"></script>
       <div id="date"></div>
       <div id="time"></div>
 
       <!--Add buttons to initiate auth sequence and sign out-->
       <button id="authorize_button">Authorize</button>
       <button id="signout_button" style="display: none;">Sign Out</button>
-
-      <script src = "calendar.js"></script>
       <div id="calendar"></div>
    </body>
 </html>
