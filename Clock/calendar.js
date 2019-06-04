@@ -31,9 +31,6 @@ var calendarIcons = {
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
-    alert("HEY1");
-    var pre = document.getElementById('calendar');
-    pre.innerHTML = '<p class="eventText">Hey</p>';
     gapi.load('client:auth2', initClient);
 }
 
@@ -50,7 +47,6 @@ function initClient() {
         async: false
     }).then(function () {
         // Listen for sign-in state changes.
-        alert("HEY2");
         authorizeButton.onclick = handleAuthClick;
         signoutButton.onclick = handleSignoutClick;
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
@@ -65,7 +61,6 @@ function initClient() {
  *  appropriately. After a sign-in, the API is called.
  */
 function updateSigninStatus(isSignedIn) {
-    alert("HEY4");
     if (isSignedIn) {
         authorizeButton.style.display = 'none';
         runCustomIterations();
@@ -79,7 +74,6 @@ function updateSigninStatus(isSignedIn) {
  *  Sign in the user upon button click.
  */
 function handleAuthClick(event) {
-    alert("HEY3");
     gapi.auth2.getAuthInstance().signIn();
 }
 
@@ -135,9 +129,6 @@ function IterateOverCalendars(calendars) {
 
 async function runCustomIterations() {
     while (true) {
-        // var pre = document.getElementById('calendar');
-        // pre.innerHTML = '<p class="event_text">Hey</p>';
-        alert("HEY");
         savedEvents.length = 0;
         totalEventsCount = 0;
 
