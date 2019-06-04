@@ -132,7 +132,7 @@ async function runCustomIterations() {
         savedEvents.length = 0;
         totalEventsCount = 0;
 
-        await gapi.client.calendar.calendarList.list(
+        gapi.client.calendar.calendarList.list(
         ).execute(function (resp) {
             IterateOverCalendars(resp.items);
         });
