@@ -136,7 +136,7 @@ async function runCustomIterations() {
         ).execute(function (resp) {
             IterateOverCalendars(resp.items);
         });
-        await wait(60000);
+        //await wait(60000);
     }
 }
 
