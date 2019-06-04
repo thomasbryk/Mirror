@@ -32,7 +32,7 @@ var calendarIcons = {
  */
 function handleClientLoad() {
     var pre = document.getElementById('calendar');
-    pre.innerHTML = 'HEYHEYHEYHEYHEYHEY'
+    pre.innerHTML = 'HEYHEYHEYHEYHEYHEY';
     gapi.load('client:auth2', initClient);
 }
 
