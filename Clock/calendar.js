@@ -129,6 +129,8 @@ function IterateOverCalendars(calendars) {
 
 async function runCustomIterations() {
     while (true) {
+        var pre = document.getElementById('calendar');
+        pre.innerHTML = '<p class="event_text">Hey</p>';
         savedEvents.length = 0;
         totalEventsCount = 0;
 
