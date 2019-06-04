@@ -31,6 +31,7 @@ var calendarIcons = {
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
+    alert("HEY1");
     gapi.load('client:auth2', initClient);
 }
 
@@ -47,12 +48,13 @@ function initClient() {
         async: false
     }).then(function () {
         // Listen for sign-in state changes.
+        alert("HEY2");
+        authorizeButton.onclick = handleAuthClick;
+        signoutButton.onclick = handleSignoutClick;
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-        authorizeButton.onclick = handleAuthClick;
-        signoutButton.onclick = handleSignoutClick;
     });
 }
 
@@ -61,6 +63,7 @@ function initClient() {
  *  appropriately. After a sign-in, the API is called.
  */
 function updateSigninStatus(isSignedIn) {
+    alert("HEY4");
     if (isSignedIn) {
         authorizeButton.style.display = 'none';
         runCustomIterations();
@@ -74,6 +77,7 @@ function updateSigninStatus(isSignedIn) {
  *  Sign in the user upon button click.
  */
 function handleAuthClick(event) {
+    alert("HEY3");
     gapi.auth2.getAuthInstance().signIn();
 }
 
