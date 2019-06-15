@@ -12,7 +12,7 @@ var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 
-var maxResults = 4;
+var maxResults = 3;
 var totalEventsCount = 0;
 var savedEvents = [];
 var calendarIcons = {
