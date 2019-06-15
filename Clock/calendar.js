@@ -127,7 +127,7 @@ function IterateOverCalendars(calendars) {
     }
 }
 
-async function runCustomIterations() {
+function runCustomIterations() {
     savedEvents.length = 0;
     totalEventsCount = 0;
 
