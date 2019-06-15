@@ -128,18 +128,13 @@ function IterateOverCalendars(calendars) {
 }
 
 function runCustomIterations() {
-    var count = 0;
-    setInterval(function () {
-        savedEvents.length = 0;
-        totalEventsCount = 0;
+    savedEvents.length = 0;
+    totalEventsCount = 0;
 
-        gapi.client.calendar.calendarList.list(
-        ).execute(function (resp) {
-            console.log(count);
-            IterateOverCalendars(resp.items);
-            count++;
-        });
-    }, 15000);
+    gapi.client.calendar.calendarList.list(
+    ).execute(function (resp) {
+        IterateOverCalendars(resp.items);
+    });
 }
 
 function sortDates(eventCalendarItem1, eventCalendarItem2) {
@@ -237,3 +232,5 @@ function getCalendarIcon(calName) {
     }
     return ("Icons/" + icon + ".png");
 }
+
+setInterval(runCustomIterations, 15000);
