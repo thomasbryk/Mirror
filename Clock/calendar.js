@@ -47,12 +47,12 @@ function initClient() {
         async: false
     }).then(function () {
         // Listen for sign-in state changes.
-        authorizeButton.onclick = handleAuthClick;
-        signoutButton.onclick = handleSignoutClick;
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        authorizeButton.onclick = handleAuthClick;
+        signoutButton.onclick = handleSignoutClick;
     });
 }
 
@@ -128,16 +128,13 @@ function IterateOverCalendars(calendars) {
 }
 
 async function runCustomIterations() {
-    while (true) {
-        savedEvents.length = 0;
-        totalEventsCount = 0;
+    savedEvents.length = 0;
+    totalEventsCount = 0;
 
-        await gapi.client.calendar.calendarList.list(
-        ).execute(function (resp) {
-            IterateOverCalendars(resp.items);
-        });
-        await wait(60000);
-    }
+    gapi.client.calendar.calendarList.list(
+    ).execute(function (resp) {
+        IterateOverCalendars(resp.items);
+    });
 }
 
 function sortDates(eventCalendarItem1, eventCalendarItem2) {
@@ -234,10 +231,4 @@ function getCalendarIcon(calName) {
         icon = calendarIcons["Event"];
     }
     return ("Icons/" + icon + ".png");
-}
-
-async function wait(ms) {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
 }
