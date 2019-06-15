@@ -128,13 +128,18 @@ function IterateOverCalendars(calendars) {
 }
 
 function runCustomIterations() {
-    savedEvents.length = 0;
-    totalEventsCount = 0;
+    var count = 0;
+    setInterval(function () {
+        savedEvents.length = 0;
+        totalEventsCount = 0;
 
-    gapi.client.calendar.calendarList.list(
-    ).execute(function (resp) {
-        IterateOverCalendars(resp.items);
-    });
+        gapi.client.calendar.calendarList.list(
+        ).execute(function (resp) {
+            console.log(count);
+            IterateOverCalendars(resp.items);
+            count++;
+        });
+    }, 15000);
 }
 
 function sortDates(eventCalendarItem1, eventCalendarItem2) {
