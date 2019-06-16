@@ -45,7 +45,7 @@ body {
 i {
   color: #FFF;
   font-family: weathericons;
-  font-size: 150px;
+  font-size: 100px;
   font-weight: normal;
   font-style: normal;
   line-height: 1.0;
@@ -55,22 +55,12 @@ i {
 i2 {
     color: #fff;
     font-family: weathericons;
-    font-size: 30px;
+    font-size: 15px;
     font-weight: normal;
     font-style: normal;
     text-align: left;
     position: center;
 }
-
-/* .wi {
-  display: inline-block;
-  font-family: 'weathericons';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
 
 .wi-yahoo-0:before {
   content: "\f056";
