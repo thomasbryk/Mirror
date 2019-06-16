@@ -112,7 +112,7 @@ td {
 
 .weekTD{
     float: middle-right;
-    padding: 0px 0px 7px 0px;
+    padding: 0px 0px 6px 0px;
     font-family: Roboto-Light;
     font-weight: bold;
 }
@@ -196,4 +196,4 @@ i2 {
 .wi-yahoo-46:before {  content: "\f01b";}
 .wi-yahoo-47:before {  content: "\f00e";}
 
-.wi-yahoo-3200:before {content: "\f077";}
+.wi-yahoo-3200:before { content: "\f077";}
