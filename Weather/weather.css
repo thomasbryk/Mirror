@@ -189,6 +189,9 @@ i2 {
 .wi-yahoo-46:before {  content: "\f01b";}
 .wi-yahoo-47:before {  content: "\f00e";}
 .wi-yahoo-3200:before {content: "\f077";}
+.wi-sunrise:before {  content: "\f051";}
+.wi-sunset:before {  content: "\f052";}
+.wi-moonrise:before {  content: "\f0c9";}
 
 h2 {
   color: #fff;

@@ -65,8 +65,8 @@ function getWeather() {
             if ((weather.current_observation.astronomy.sunset).charAt(3) == ' ') {
                 weather.current_observation.astronomy.sunset = weather.current_observation.astronomy.sunset.slice(0, 2) + "0" + weather.current_observation.astronomy.sunset.slice(2);
             }
-            html += '<li class="sunRiseSet"><i2 class="wi-yahoo-' + 34 + '"></i2> ' + weather.current_observation.astronomy.sunrise + '';
-            html += '&nbsp&nbsp&nbsp <i2 class="wi-yahoo-' + 31 + '"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
+            html += '<li class="sunRiseSet"><i2 class="wi-sunrise"></i2> ' + weather.current_observation.astronomy.sunrise + '';
+            html += '&nbsp&nbsp&nbsp <i2 class="wi-moonrise"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
             html += '</span>';
 
             html += '<span class=week>';
