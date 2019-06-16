@@ -48,7 +48,7 @@ function getWeather() {
         method: 'GET',
         success: function (weather) {
             console.log(weather);
-            html = '<h2><i class="icon-' + weather.current_observation.condition.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+            html = '<h2><i class="wi-yahoo-' + weather.current_observation.condition.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
             if (weather.current_observation.condition.temperature > 30) {
                 html += '<span class="hot"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
             } else if (weather.current_observation.condition.temperature < -10) {
@@ -65,14 +65,14 @@ function getWeather() {
             if ((weather.current_observation.astronomy.sunset).charAt(3) == ' ') {
                 weather.current_observation.astronomy.sunset = weather.current_observation.astronomy.sunset.slice(0, 2) + "0" + weather.current_observation.astronomy.sunset.slice(2);
             }
-            html += '<li class="sunRiseSet"><i2 class="icon-' + 34 + '"></i2> ' + weather.current_observation.astronomy.sunrise + '';
-            html += '&nbsp&nbsp&nbsp <i2 class="icon-' + 31 + '"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
+            html += '<li class="sunRiseSet"><i2 class="wi-yahoo-' + 34 + '"></i2> ' + weather.current_observation.astronomy.sunrise + '';
+            html += '&nbsp&nbsp&nbsp <i2 class="wi-yahoo-' + 31 + '"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
             html += '</span>';
 
             html += '<span class=week>';
             html += '<table style="height:100%;">';
             for (var i = 0; i < 5; i++) {
-                html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="icon-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
+                html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
             }
             html += '</table></span>';
             $("#weather").html(html);

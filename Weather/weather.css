@@ -47,7 +47,7 @@ body {
 
 i {
   color: #FFF;
-  font-family: weather;
+  /* font-family: weather; */
   font-size: 150px;
   font-weight: normal;
   font-style: normal;
@@ -57,7 +57,7 @@ i {
 
 i2 {
     color: #fff;
-    font-family: weather;
+    /* font-family: weather; */
     font-size: 30px;
     font-weight: normal;
     font-style: normal;
@@ -65,7 +65,7 @@ i2 {
     position: center;
 }
 
-.icon-0:before { content: ":"; }
+/* .icon-0:before { content: ":"; }
 .icon-1:before { content: "p"; }
 .icon-2:before { content: "S"; }
 .icon-3:before { content: "Q"; }
@@ -112,7 +112,7 @@ i2 {
 .icon-44:before { content: "a"; }
 .icon-45:before { content: "S"; }
 .icon-46:before { content: "U"; }
-.icon-47:before { content: "S"; }
+.icon-47:before { content: "S"; } */
 
 h2 {
   color: #fff;
