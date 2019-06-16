@@ -48,7 +48,7 @@ function getWeather() {
         method: 'GET',
         success: function (weather) {
             console.log(weather);
-            html = '<h2><i class="wi-yahoo-' + weather.current_observation.condition.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+            html = '<h2><i class="wi wi-yahoo-' + weather.current_observation.condition.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
             if (weather.current_observation.condition.temperature > 30) {
                 html += '<span class="hot"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
             } else if (weather.current_observation.condition.temperature < -10) {
