@@ -11,7 +11,7 @@ function getWeather() {
     var consumer_secret = 'c25c0605b09e1f4502e285b97615d33ed4e85227';
     var concat = '&';
     var units = 'c';
-    var query = { 'location': 'Sulaibiya, Kuwait', 'format': 'json', 'u': units };
+    var query = { 'location': 'ottawa,on', 'format': 'json', 'u': units };
     var oauth = {
         'oauth_consumer_key': consumer_key,
         'oauth_nonce': Math.random().toString(36).substring(2),
