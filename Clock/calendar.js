@@ -233,4 +233,4 @@ function getCalendarIcon(calName) {
     return ("Icons/" + icon + ".png");
 }
 
-setInterval(runCustomIterations, 15000);
+setInterval(runCustomIterations, 60000);
