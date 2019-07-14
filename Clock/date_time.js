@@ -1,7 +1,6 @@
 function startTime() {
     var today = new Date();
-    months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+
     var day = today.toLocaleString('default', { weekday: 'long' });
     var month = today.toLocaleString('default', { month: 'long' });
     var num = today.getDate();
