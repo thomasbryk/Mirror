@@ -45,7 +45,7 @@ function initClient() {
         discoveryDocs: DISCOVERY_DOCS,
         scope: SCOPES,
         async: false
-    }).then(function () {
+    }).then(function() {
         // Listen for sign-in state changes.
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
@@ -93,7 +93,7 @@ function listUpcomingEvents(calID, calendar) {
         'maxResults': maxResults,
         'orderBy': 'startTime',
         'async': false
-    }).then(function (response) {
+    }).then(function(response) {
         var events = response.result.items;
 
         if (events.length > 0) {
@@ -131,8 +131,7 @@ function runCustomIterations() {
     savedEvents.length = 0;
     totalEventsCount = 0;
 
-    gapi.client.calendar.calendarList.list(
-    ).execute(function (resp) {
+    gapi.client.calendar.calendarList.list().execute(function(resp) {
         IterateOverCalendars(resp.items);
     });
 }

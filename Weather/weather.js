@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     getWeather(); //Get the initial weather.
     setInterval(getWeather, 600000); //Update the weather every 10 minutes.
 });
@@ -23,19 +23,19 @@ function getWeather() {
     var merged = {};
     $.extend(merged, query, oauth);
     // Note the sorting here is required
-    var merged_arr = Object.keys(merged).sort().map(function (k) {
+    var merged_arr = Object.keys(merged).sort().map(function(k) {
         return [k + '=' + encodeURIComponent(merged[k])];
     });
-    var signature_base_str = method
-        + concat + encodeURIComponent(url)
-        + concat + encodeURIComponent(merged_arr.join(concat));
+    var signature_base_str = method +
+        concat + encodeURIComponent(url) +
+        concat + encodeURIComponent(merged_arr.join(concat));
 
     var composite_key = encodeURIComponent(consumer_secret) + concat;
     var hash = CryptoJS.HmacSHA1(signature_base_str, composite_key);
     var signature = hash.toString(CryptoJS.enc.Base64);
 
     oauth['oauth_signature'] = signature;
-    var auth_header = 'OAuth ' + Object.keys(oauth).map(function (k) {
+    var auth_header = 'OAuth ' + Object.keys(oauth).map(function(k) {
         return [k + '="' + oauth[k] + '"'];
     }).join(',');
 
@@ -46,7 +46,7 @@ function getWeather() {
             'X-Yahoo-App-Id': app_id
         },
         method: 'GET',
-        success: function (weather) {
+        success: function(weather) {
             console.log(weather);
             html = '<h2><i class="wi-yahoo-' + weather.current_observation.condition.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
             if (weather.current_observation.condition.temperature > 30) {
@@ -77,7 +77,7 @@ function getWeather() {
             html += '</table></span>';
             $("#weather").html(html);
         },
-        error: function (error) {
+        error: function(error) {
             $("#weather").html('<li>' + error + '</li>');
         }
     });
