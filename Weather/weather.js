@@ -1,10 +1,32 @@
+var API_KEY = '0059287a1f10d4f818f22bc07882e6ae';
+
+
 $(document).ready(function() {
     getWeather(); //Get the initial weather.
     setInterval(getWeather, 600000); //Update the weather every 10 minutes.
 });
 
 function getWeather() {
-    var url = 'https://weather-ydn-yql.media.yahoo.com/forecastrss';
+    getCurrentWeather();
+    //getWeekWeather();
+}
+
+function getCurrentWeather() {
+    $.ajax({
+        url: 'http://api.openweathermap.org/data/2.5/weather',
+        data: {
+            zip: 'K2C1N5,ca',
+            units: 'metric',
+            APPID: API_KEY
+        },
+        success: weather => {
+            console.log(weather["main"]["temp"] + " C");
+        }
+    })
+}
+
+function getWeather() {
+    var url = 'api.openweathermap.org';
     var method = 'GET';
     var app_id = 'P12LqJ7k';
     var consumer_key = 'dj0yJmk9UlJsbnBQTks0SGdQJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWFm';
