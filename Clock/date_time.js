@@ -1,11 +1,11 @@
 function startTime() {
     var today = new Date();
-    months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
+    months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
     days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     var day = days[today.getDay()];
     var month = months[today.getMonth()];
     var num = today.getDate();
-    var year = (today.getFullYear());
+    var year = today.getFullYear();
 
     document.getElementById('date').innerHTML = '<p class="date" style="opacity:0.7; padding-top: 20px;">' + day + ", " + month + " " + num + ", " + year +'</p>';
 
