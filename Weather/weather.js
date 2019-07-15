@@ -4,8 +4,8 @@ var API_KEY = '0059287a1f10d4f818f22bc07882e6ae';
 $(document).ready(function() {
     html = '<h2><i class="wi wi-owm-200"><span style="font-size: 30px;">&nbsp;</span></i>';
     $("#weather").html(html);
-    getWeather(); //Get the initial weather.
-    setInterval(getWeather, 600000); //Update the weather every 10 minutes.
+    //getWeather(); //Get the initial weather.
+    //setInterval(getWeather, 600000); //Update the weather every 10 minutes.
 });
 
 function getWeather() {
