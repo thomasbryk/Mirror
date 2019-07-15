@@ -1,8 +1,11 @@
+var months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+var days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+
 function startTime() {
     var today = new Date();
 
-    var day = today.toLocaleString('default', { weekday: 'long' });
-    var month = today.toLocaleString('default', { month: 'long' });
+    var day = days[today.getDay()];
+    var month = months[today.getMonth()];
     var num = today.getDate();
     var year = today.getFullYear();
 
