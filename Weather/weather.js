@@ -25,6 +25,20 @@ function getCurrentWeather() {
     })
 }
 
+function getWeekWeather() {
+    $.ajax({
+        url: 'http://api.openweathermap.org/data/2.5/forecast',
+        data: {
+            zip: 'K2C1N5,ca',
+            units: 'metric',
+            APPID: API_KEY
+        },
+        success: weather => {
+            console.log(weather["main"]["temp"] + " C");
+        }
+    })
+}
+
 function getWeather() {
     var url = 'api.openweathermap.org';
     var method = 'GET';
