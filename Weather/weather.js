@@ -28,7 +28,7 @@ function getCurrentWeather(html) {
                 html += '<h2>Unable to get current weather.</h2>';
                 return;
             }
-            html += '<h2><i class="' + getFontFromConditionCode(weather["weather"][0]) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+            html += '<h2><i class="' + getFontFromConditionCode(weather.weather[0]) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
             if (weather.current_observation.condition.temperature > 30) {
                 html += '<span class="hot"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
             } else if (weather.current_observation.condition.temperature < -10) {
