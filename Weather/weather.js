@@ -15,7 +15,7 @@ function getWeather() {
 
 function getCurrentWeather() {
     $.ajax({
-        url: 'http://api.openweathermap.org/data/2.5/weather',
+        url: 'https://api.openweathermap.org/data/2.5/weather',
         data: {
             zip: 'K2C1N5,ca',
             units: 'metric',
@@ -27,7 +27,7 @@ function getCurrentWeather() {
                 html += '<h2>Unable to get current weather.</h2>';
                 return;
             }
-            html += '<h2><i class="' + getFontFromConditionCode + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+            html += '<h2><i class="' + getFontFromConditionCode() + '"><span style="font-size: 30px;">&nbsp;</span></i>';
             if (weather.current_observation.condition.temperature > 30) {
                 html += '<span class="hot"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
             } else if (weather.current_observation.condition.temperature < -10) {
