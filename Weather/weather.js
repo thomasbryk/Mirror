@@ -80,6 +80,8 @@ function getWeekWeather(html) {
 
 function getFontFromConditionCode(weather) {
     var code = weather.weather[0].id;
+    console.log(code);
+    console.log(weather.weather);
     var prefix = 'wi wi-owm-';
 
     // If condition code is 'clear sky' or 'few clouds', add day/night to prefix
