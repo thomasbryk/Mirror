@@ -2,17 +2,15 @@ var API_KEY = '0059287a1f10d4f818f22bc07882e6ae';
 
 
 $(document).ready(function() {
-    html = '<h2><i class="wi wi-owm-600"><span style="font-size: 30px;">&nbsp;</span></i></h2>';
-    html += '<h2><i class="wi wi-owm-day-600"><span style="font-size: 30px;">&nbsp;</span></i></h2>';
-    html += '<h2><i class="wi wi-owm-night-600"><span style="font-size: 30px;">&nbsp;</span></i></h2>';
-    $("#weather").html(html);
-    //getWeather(); //Get the initial weather.
-    //setInterval(getWeather, 600000); //Update the weather every 10 minutes.
+    getWeather(); //Get the initial weather.
+    setInterval(getWeather, 600000); //Update the weather every 10 minutes.
 });
 
 function getWeather() {
-    getCurrentWeather();
-    //getWeekWeather();
+    var html = "";
+    html += getCurrentWeather(html);
+    //html += getWeekWeather(html);
+    $("#weather").html(html);
 }
 
 function getCurrentWeather() {
@@ -24,7 +22,42 @@ function getCurrentWeather() {
             APPID: API_KEY
         },
         success: weather => {
-            console.log(weather["main"]["temp"] + " C");
+            console.log(weather);
+            if (weather == null) {
+                html += '<h2>Unable to get current weather.</h2>';
+                return;
+            }
+            html += '<h2><i class="' + getFontFromConditionCode + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+            if (weather.current_observation.condition.temperature > 30) {
+                html += '<span class="hot"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
+            } else if (weather.current_observation.condition.temperature < -10) {
+                html += '<span class="cold"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
+            } else {
+                html += '' + weather.current_observation.condition.temperature + '&deg;' + units + '</h2>';
+            }
+            html += '<span class=info>';
+            html += '<li class="city">' + weather.location.city + ', ' + weather.location.region + '</li>';
+            html += '<li class="forecastDescription">' + 'Currently ' + weather.current_observation.condition.text.toLowerCase() + ' and feels like ' + weather.current_observation.wind.chill + '&deg;' + units + '. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + '.</li>';
+            if ((weather.current_observation.astronomy.sunrise).charAt(3) == ' ') {
+                weather.current_observation.astronomy.sunrise = weather.current_observation.astronomy.sunrise.slice(0, 2) + "0" + weather.current_observation.astronomy.sunrise.slice(2);
+            }
+            if ((weather.current_observation.astronomy.sunset).charAt(3) == ' ') {
+                weather.current_observation.astronomy.sunset = weather.current_observation.astronomy.sunset.slice(0, 2) + "0" + weather.current_observation.astronomy.sunset.slice(2);
+            }
+            html += '<li class="sunRiseSet"><i2 class="wi-sunrise"></i2> ' + weather.current_observation.astronomy.sunrise + '';
+            html += '&nbsp&nbsp&nbsp <i2 class="wi-moonrise"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
+            html += '</span>';
+
+            html += '<span class=week>';
+            html += '<table style="height:100%;">';
+            for (var i = 0; i < 5; i++) {
+                html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
+            }
+            html += '</table></span>';
+            return html;
+        },
+        error: function(error) {
+            return error;
         }
     })
 }
@@ -39,25 +72,34 @@ function getWeekWeather() {
         },
         success: weather => {
             console.log(weather["main"]["temp"] + " C");
-            console.log("Condition Code: " + getConditionCode(weather[0].id));
+            console.log("Condition Code: " + getFontFromConditionCode(weather[0]));
         }
     })
 }
 
-function getConditionCode(code) {
-    var prefix = 'wi wi-';
-    var icon = weatherIcons[code].icon;
+function getFontFromConditionCode(weather) {
+    var code = weather.id;
+    var prefix = 'wi wi-owm-';
 
-    // If we are not in the ranges mentioned above, add a day/night prefix.
-    if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
-        icon = 'day-' + icon;
+    // If condition code is 'clear sky' or 'few clouds', add day/night to prefix
+    if (code == 800 || code == 801) {
+        var sunset = new Date(weather["sys"].sunset * 1000);
+        var sunrise = new Date(weather["sys"].sunrise * 1000)
+        var today = new Date();
+
+        //If it is night time (either before sunrise or after sunset)
+        if (today < sunrise || today > sunset) {
+            prefix += 'night-';
+        } else {
+            prefix += 'day-';
+        }
     }
 
-    // Finally tack on the prefix.
-    return icon = prefix + icon;
+    // Finally tack on the condition code.
+    return prefix + code;
 }
 
-function getWeather() {
+function getWeather_old() {
     var url = 'api.openweathermap.org';
     var method = 'GET';
     var app_id = 'P12LqJ7k';
