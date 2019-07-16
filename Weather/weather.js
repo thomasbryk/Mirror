@@ -83,18 +83,18 @@ function getFontFromConditionCode(weather) {
     var prefix = 'wi wi-owm-';
 
     // If condition code is 'clear sky' or 'few clouds', add day/night to prefix
-    if (code == 800 || code == 801) {
-        var sunset = new Date(weather["sys"].sunset * 1000);
-        var sunrise = new Date(weather["sys"].sunrise * 1000)
-        var today = new Date();
+    // if (code == 800 || code == 801) {
+    //     var sunset = new Date(weather["sys"].sunset * 1000);
+    //     var sunrise = new Date(weather["sys"].sunrise * 1000)
+    //     var today = new Date();
 
-        //If it is night time (either before sunrise or after sunset)
-        if (today < sunrise || today > sunset) {
-            prefix += 'night-';
-        } else {
-            prefix += 'day-';
-        }
-    }
+    //     //If it is night time (either before sunrise or after sunset)
+    //     if (today < sunrise || today > sunset) {
+    //         prefix += 'night-';
+    //     } else {
+    //         prefix += 'day-';
+    //     }
+    // }
 
     // Finally tack on the condition code.
     return prefix + code;
