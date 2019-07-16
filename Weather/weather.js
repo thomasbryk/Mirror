@@ -17,7 +17,8 @@ function getCurrentWeather() {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/weather',
         data: {
-            zip: 'K2C1N5,ca',
+            lat: '45.369910',
+            lon: '-75.701720',
             units: 'metric',
             APPID: API_KEY
         },
