@@ -7,9 +7,8 @@ function startTime() {
     var day = days[today.getDay()];
     var month = months[today.getMonth()];
     var num = today.getDate();
-    var year = today.getFullYear();
 
-    document.getElementById('date').innerHTML = '<p class="date">' + day + ", " + month + " " + num + ", " + year + '</p>';
+    document.getElementById('date').innerHTML = '<p class="date">' + day + ", " + month + " " + num + '<span class="date_ordinal">' + ordinalIndicator(num) + '</span></p>';
 
     var hour = today.getHours();
     var min = today.getMinutes();
@@ -34,4 +33,14 @@ function startTime() {
 function checkTime(i) {
     if (i < 10) { i = "0" + i }; // add zero in front of numbers < 10
     return i;
+}
+
+function ordinalIndicator(dateNumber) {
+    if (dateNumber > 3 && dateNumber < 21) return 'th';
+    switch (dateNumber % 10) {
+        case 1: return "st";
+        case 2: return "nd";
+        case 3: return "rd";
+        default: return "th";
+    }
 }
