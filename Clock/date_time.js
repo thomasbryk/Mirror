@@ -7,9 +7,8 @@ function startTime() {
     var day = days[today.getDay()];
     var month = months[today.getMonth()];
     var num = today.getDate();
-    var year = today.getFullYear();
 
-    document.getElementById('date').innerHTML = '<p class="date">' + day + ", " + month + " " + num + ", " + year + '</p>';
+    document.getElementById('date').innerHTML = '<p class="date">' + day + ", " + month + " " + num + '</p>';
 
     var hour = today.getHours();
     var min = today.getMinutes();
