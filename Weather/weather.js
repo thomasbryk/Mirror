@@ -55,7 +55,7 @@ function getWeekWeather(weather, html) {
             console.log("Forecast: ");
             console.log(forecast);
             if (forecast == null) {
-                html += '<h2>Unable to get current weather.</h2>';
+                html += '<h2>Unable to get forecast.</h2>';
             } else {
                 html += displayWeather(weather, forecast, html);
             }
@@ -68,7 +68,7 @@ function getWeekWeather(weather, html) {
 }
 
 function displayWeather(weather, forecast, html) {
-    html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+    //html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
     if (weather.main.temp > 30) {
         html += '<span class="hot"> ' + weather.main.temp + '&deg;' + UNITS + '</span></h2>';
     } else if (weather.main.temp < -10) {
