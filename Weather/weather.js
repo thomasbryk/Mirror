@@ -66,12 +66,12 @@ function getWeekWeather(weather, html) {
 
 function displayWeather(weather, forecast, html) {
     html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
-    if (weather.main.condition.temp > 30) {
-        html += '<span class="hot"> ' + weather.main.condition.temp + '&deg;' + units + '</span></h2>';
-    } else if (weather.main.condition.temp < -10) {
-        html += '<span class="cold"> ' + weather.main.condition.temp + '&deg;' + units + '</span></h2>';
+    if (weather.main.temp > 30) {
+        html += '<span class="hot"> ' + weather.main.temp + '&deg;' + units + '</span></h2>';
+    } else if (weather.main.temp < -10) {
+        html += '<span class="cold"> ' + weather.main.temp + '&deg;' + units + '</span></h2>';
     } else {
-        html += '' + weather.main.condition.temp + '&deg;' + units + '</h2>';
+        html += '' + weather.main.temp + '&deg;' + units + '</h2>';
     }
     html += '<span class=info>';
     html += '<li class="city">' + weather.name + ', ' + (weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
