@@ -9,7 +9,6 @@ $(document).ready(function() {
 function getWeather() {
     var html = "";
     html += getCurrentWeather(html);
-    //html += getWeekWeather(html);
     $("#weather").html(html);
 }
 
@@ -17,44 +16,19 @@ function getCurrentWeather(html) {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/weather',
         data: {
-            lat: '45.369910',
-            lon: '-75.701720',
+            // lat: '45.369910',
+            // lon: '-75.701720',
+            zip: 'K2C1N5,ca',
             units: 'metric',
             APPID: API_KEY
         },
         success: weather => {
-            console.log(weather);
+            console.log("Forecast: " + weather);
             if (weather == null) {
                 html += '<h2>Unable to get current weather.</h2>';
-                return;
-            }
-            html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
-            if (weather.current_observation.condition.temperature > 30) {
-                html += '<span class="hot"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
-            } else if (weather.current_observation.condition.temperature < -10) {
-                html += '<span class="cold"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
             } else {
-                html += '' + weather.current_observation.condition.temperature + '&deg;' + units + '</h2>';
+                html += getWeekWeather(weather, html);
             }
-            html += '<span class=info>';
-            html += '<li class="city">' + weather.location.city + ', ' + weather.location.region + '</li>';
-            html += '<li class="forecastDescription">' + 'Currently ' + weather.current_observation.condition.text.toLowerCase() + ' and feels like ' + weather.current_observation.wind.chill + '&deg;' + units + '. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + '.</li>';
-            if ((weather.current_observation.astronomy.sunrise).charAt(3) == ' ') {
-                weather.current_observation.astronomy.sunrise = weather.current_observation.astronomy.sunrise.slice(0, 2) + "0" + weather.current_observation.astronomy.sunrise.slice(2);
-            }
-            if ((weather.current_observation.astronomy.sunset).charAt(3) == ' ') {
-                weather.current_observation.astronomy.sunset = weather.current_observation.astronomy.sunset.slice(0, 2) + "0" + weather.current_observation.astronomy.sunset.slice(2);
-            }
-            html += '<li class="sunRiseSet"><i2 class="wi-sunrise"></i2> ' + weather.current_observation.astronomy.sunrise + '';
-            html += '&nbsp&nbsp&nbsp <i2 class="wi-moonrise"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
-            html += '</span>';
-
-            html += '<span class=week>';
-            html += '<table style="height:100%;">';
-            for (var i = 0; i < 5; i++) {
-                html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
-            }
-            html += '</table></span>';
             return html;
         },
         error: function(error) {
@@ -63,7 +37,7 @@ function getCurrentWeather(html) {
     })
 }
 
-function getWeekWeather(html) {
+function getWeekWeather(weather, html) {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/forecast',
         data: {
@@ -71,11 +45,43 @@ function getWeekWeather(html) {
             units: 'metric',
             APPID: API_KEY
         },
-        success: weather => {
-            console.log(weather["main"]["temp"] + " C");
-            console.log("Condition Code: " + getFontFromConditionCode(weather[0]));
+        success: forecast => {
+            console.log("Forecast: " + forecast);
         }
     })
+}
+
+function displayWeather() {
+    html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+    if (weather.main.condition.temp > 30) {
+        html += '<span class="hot"> ' + weather.main.condition.temp + '&deg;' + units + '</span></h2>';
+    } else if (weather.main.condition.temp < -10) {
+        html += '<span class="cold"> ' + weather.main.condition.temp + '&deg;' + units + '</span></h2>';
+    } else {
+        html += '' + weather.main.condition.temp + '&deg;' + units + '</h2>';
+    }
+    html += '<span class=info>';
+    html += '<li class="city">' + weather.name + ', ' + (weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
+    html += '<li class="forecastDescription">' + 'Currently ' + weather.main.description.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, units) + '&deg;' + units + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
+
+    // if ((weather.main.astronomy.sunrise).charAt(3) == ' ') {
+    //     weather.main.astronomy.sunrise = weather.main.astronomy.sunrise.slice(0, 2) + "0" + weather.main.astronomy.sunrise.slice(2);
+    // }
+    // if ((weather.main.astronomy.sunset).charAt(3) == ' ') {
+    //     weather.main.astronomy.sunset = weather.main.astronomy.sunset.slice(0, 2) + "0" + weather.main.astronomy.sunset.slice(2);
+    // }
+    html += '<li class="sunrise_sunset"><i2 class="wi-sunrise"></i2> ' + convertUnixTime(weather.sys.sunrise) + '';
+    html += '&nbsp&nbsp&nbsp <i2 class="wi-moonrise"></i2> ' + convertUnixTime(weather.sys.sunset) + '</li>';
+    html += '</span>';
+
+    // html += '<span class=week>';
+    // html += '<table style="height:100%;">';
+    // for (var i = 0; i < 5; i++) {
+    //     html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
+    // }
+    // html += '</table></span>';
+
+    return html;
 }
 
 function getFontFromConditionCode(weather) {
@@ -102,84 +108,31 @@ function getFontFromConditionCode(weather) {
     return prefix + code;
 }
 
-function getWeather_old() {
-    var url = 'api.openweathermap.org';
-    var method = 'GET';
-    var app_id = 'P12LqJ7k';
-    var consumer_key = 'dj0yJmk9UlJsbnBQTks0SGdQJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWFm';
-    var consumer_secret = 'c25c0605b09e1f4502e285b97615d33ed4e85227';
-    var concat = '&';
-    var units = 'c';
-    var query = { 'location': 'ottawa,on', 'format': 'json', 'u': units };
-    var oauth = {
-        'oauth_consumer_key': consumer_key,
-        'oauth_nonce': Math.random().toString(36).substring(2),
-        'oauth_signature_method': 'HMAC-SHA1',
-        'oauth_timestamp': parseInt(new Date().getTime() / 1000).toString(),
-        'oauth_version': '1.0'
-    };
+function getFeelsLike(windspeed, temp, humidity, units) {
+    const windInMph = (this.windUnits === "imperial") ? this.windSpeed : this.windSpeed * 2.23694;
+    const tempInF = this.tempUnits === "imperial" ? this.temperature : this.temperature * 9 / 5 + 32;
+    let feelsLike = tempInF;
 
-    var merged = {};
-    $.extend(merged, query, oauth);
-    // Note the sorting here is required
-    var merged_arr = Object.keys(merged).sort().map(function(k) {
-        return [k + '=' + encodeURIComponent(merged[k])];
-    });
-    var signature_base_str = method +
-        concat + encodeURIComponent(url) +
-        concat + encodeURIComponent(merged_arr.join(concat));
+    if (windInMph > 3 && tempInF < 50) {
+        feelsLike = Math.round(35.74 + 0.6215 * tempInF - 35.75 * Math.pow(windInMph, 0.16) + 0.4275 * tempInF * Math.pow(windInMph, 0.16));
+    } else if (tempInF > 80 && this.humidity > 40) {
+        feelsLike = -42.379 + 2.04901523 * tempInF + 10.14333127 * this.humidity -
+            0.22475541 * tempInF * this.humidity - 6.83783 * Math.pow(10, -3) * tempInF * tempInF -
+            5.481717 * Math.pow(10, -2) * this.humidity * this.humidity +
+            1.22874 * Math.pow(10, -3) * tempInF * tempInF * this.humidity +
+            8.5282 * Math.pow(10, -4) * tempInF * this.humidity * this.humidity -
+            1.99 * Math.pow(10, -6) * tempInF * tempInF * this.humidity * this.humidity;
+    }
 
-    var composite_key = encodeURIComponent(consumer_secret) + concat;
-    var hash = CryptoJS.HmacSHA1(signature_base_str, composite_key);
-    var signature = hash.toString(CryptoJS.enc.Base64);
+    return this.tempUnits === "imperial" ? feelsLike : (feelsLike - 32) * 5 / 9;
+}
 
-    oauth['oauth_signature'] = signature;
-    var auth_header = 'OAuth ' + Object.keys(oauth).map(function(k) {
-        return [k + '="' + oauth[k] + '"'];
-    }).join(',');
+function convertUnixTime(unix_timestamp) {
+    var date = new Date(unix_timestamp * 1000); // Create a new JavaScript Date object based on the timestamp multiplied by 1000 so that the argument is in milliseconds, not seconds.
+    var hours = date.getHours(); // Hours part from the timestamp  
+    var minutes = "0" + date.getMinutes(); // Minutes part from the timestamp
 
-    $.ajax({
-        url: url + '?' + $.param(query),
-        headers: {
-            'Authorization': auth_header,
-            'X-Yahoo-App-Id': app_id
-        },
-        method: 'GET',
-        success: function(weather) {
-            console.log(weather);
-            html = '<h2><i class="wi-yahoo-' + weather.current_observation.condition.code + '"><span style="font-size: 30px;">&nbsp;</span></i>';
-            if (weather.current_observation.condition.temperature > 30) {
-                html += '<span class="hot"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
-            } else if (weather.current_observation.condition.temperature < -10) {
-                html += '<span class="cold"> ' + weather.current_observation.condition.temperature + '&deg;' + units + '</span></h2>';
-            } else {
-                html += '' + weather.current_observation.condition.temperature + '&deg;' + units + '</h2>';
-            }
-            html += '<span class=info>';
-            html += '<li class="city">' + weather.location.city + ', ' + weather.location.region + '</li>';
-            html += '<li class="forecastDescription">' + 'Currently ' + weather.current_observation.condition.text.toLowerCase() + ' and feels like ' + weather.current_observation.wind.chill + '&deg;' + units + '. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + '.</li>';
-            if ((weather.current_observation.astronomy.sunrise).charAt(3) == ' ') {
-                weather.current_observation.astronomy.sunrise = weather.current_observation.astronomy.sunrise.slice(0, 2) + "0" + weather.current_observation.astronomy.sunrise.slice(2);
-            }
-            if ((weather.current_observation.astronomy.sunset).charAt(3) == ' ') {
-                weather.current_observation.astronomy.sunset = weather.current_observation.astronomy.sunset.slice(0, 2) + "0" + weather.current_observation.astronomy.sunset.slice(2);
-            }
-            html += '<li class="sunRiseSet"><i2 class="wi-sunrise"></i2> ' + weather.current_observation.astronomy.sunrise + '';
-            html += '&nbsp&nbsp&nbsp <i2 class="wi-moonrise"></i2> ' + weather.current_observation.astronomy.sunset + '</li>';
-            html += '</span>';
-
-            html += '<span class=week>';
-            html += '<table style="height:100%;">';
-            for (var i = 0; i < 5; i++) {
-                html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
-            }
-            html += '</table></span>';
-            $("#weather").html(html);
-        },
-        error: function(error) {
-            $("#weather").html('<li>' + error + '</li>');
-        }
-    });
+    return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2); // Will display time in 10:30:23 format
 }
 
 var weatherIcons = {
