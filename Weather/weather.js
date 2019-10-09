@@ -23,7 +23,8 @@ function getCurrentWeather(html) {
             APPID: API_KEY
         },
         success: weather => {
-            console.log("Forecast: " + weather);
+            console.log("Current Weather: ");
+            console.log(weather);
             if (weather == null) {
                 html += '<h2>Unable to get current weather.</h2>';
             } else {
@@ -48,12 +49,22 @@ function getWeekWeather(weather, html) {
             APPID: API_KEY
         },
         success: forecast => {
-            console.log("Forecast: " + forecast);
+            console.log("Forecast: ");
+            console.log(forecast);
+            if (forecast == null) {
+                html += '<h2>Unable to get current weather.</h2>';
+            } else {
+                html += displayWeather(weather, forecast, html);
+            }
+            return html;
+        },
+        error: function(error) {
+            return error;
         }
     })
 }
 
-function displayWeather() {
+function displayWeather(weather, forecast, html) {
     html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
     if (weather.main.condition.temp > 30) {
         html += '<span class="hot"> ' + weather.main.condition.temp + '&deg;' + units + '</span></h2>';
