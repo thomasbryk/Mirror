@@ -73,16 +73,17 @@ function getWeekWeather(weather, html) {
 
 function displayWeather(weather, forecast, html) {
     html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
-    if (weather.main.temp > 30) {
-        html += '<span class="hot"> ' + weather.main.temp + '&deg;' + UNITS + '</span></h2>';
-    } else if (weather.main.temp < -10) {
-        html += '<span class="cold"> ' + weather.main.temp + '&deg;' + UNITS + '</span></h2>';
+    var tempRounded = round(weather.main.temp)
+    if (tempRounded > 30) {
+        html += '<span class="hot"> ' + tempRounded + '&deg;' + units_symbol(UNITS) + '</span></h2>';
+    } else if (tempRounded < -10) {
+        html += '<span class="cold"> ' + tempRounded + '&deg;' + units_symbol(UNITS) + '</span></h2>';
     } else {
-        html += '' + weather.main.temp + '&deg;' + UNITS + '</h2>';
+        html += '' + tempRounded + '&deg;' + units_symbol(UNITS) + '</h2>';
     }
     html += '<span class=info>';
     html += '<li class="city">' + weather.name + ', ' + (weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
-    html += '<li class="forecastDescription">' + 'Currently ' + weather.weather[0].main.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, UNITS) + '&deg;' + UNITS + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
+    html += '<li class="forecastDescription">' + 'Currently ' + weather.weather[0].main.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, UNITS) + '&deg;' + units_symbol(UNITS) + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
 
     // if ((weather.main.astronomy.sunrise).charAt(3) == ' ') {
     //     weather.main.astronomy.sunrise = weather.main.astronomy.sunrise.slice(0, 2) + "0" + weather.main.astronomy.sunrise.slice(2);
@@ -144,7 +145,7 @@ function getFeelsLike(windspeed, temp, humidity, units) {
             1.99 * Math.pow(10, -6) * tempInF * tempInF * humidity * humidity;
     }
 
-    return units === "imperial" ? feelsLike : (feelsLike - 32) * 5 / 9;
+    return round(units === "imperial" ? feelsLike : (feelsLike - 32) * 5 / 9);
 }
 
 function convertUnixTime(unix_timestamp) {
