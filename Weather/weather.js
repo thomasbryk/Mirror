@@ -1,5 +1,8 @@
-var API_KEY = '0059287a1f10d4f818f22bc07882e6ae';
-
+const API_KEY = '0059287a1f10d4f818f22bc07882e6ae';
+const UNITS = 'metric';
+const LAT = '45.369910';
+const LON = '-75.701720';
+const ZIP = 'K2C1N5,ca'
 
 $(document).ready(function() {
     getWeather(); //Get the initial weather.
@@ -16,10 +19,10 @@ function getCurrentWeather(html) {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/weather',
         data: {
-            lat: '45.369910',
-            lon: '-75.701720',
-            // zip: 'K2C1N5,ca',
-            units: 'metric',
+            lat: LAT,
+            lon: LON,
+            // zip: ZIP,
+            units: UNITS,
             APPID: API_KEY
         },
         success: weather => {
@@ -42,10 +45,10 @@ function getWeekWeather(weather, html) {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/forecast',
         data: {
-            lat: '45.369910',
-            lon: '-75.701720',
-            // zip: 'K2C1N5,ca',
-            units: 'metric',
+            lat: LAT,
+            lon: LON,
+            // zip: ZIP,
+            units: UNITS,
             APPID: API_KEY
         },
         success: forecast => {
@@ -67,15 +70,15 @@ function getWeekWeather(weather, html) {
 function displayWeather(weather, forecast, html) {
     html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
     if (weather.main.temp > 30) {
-        html += '<span class="hot"> ' + weather.main.temp + '&deg;' + units + '</span></h2>';
+        html += '<span class="hot"> ' + weather.main.temp + '&deg;' + UNITS + '</span></h2>';
     } else if (weather.main.temp < -10) {
-        html += '<span class="cold"> ' + weather.main.temp + '&deg;' + units + '</span></h2>';
+        html += '<span class="cold"> ' + weather.main.temp + '&deg;' + UNITS + '</span></h2>';
     } else {
-        html += '' + weather.main.temp + '&deg;' + units + '</h2>';
+        html += '' + weather.main.temp + '&deg;' + UNITS + '</h2>';
     }
     html += '<span class=info>';
-    html += '<li class="city">' + weather.name + ', ' + (weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
-    html += '<li class="forecastDescription">' + 'Currently ' + weather.main.description.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, units) + '&deg;' + units + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
+    html += '<li class="city">' + weather.name + ', ' + 0(weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
+    html += '<li class="forecastDescription">' + 'Currently ' + weather.main.description.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, UNITS) + '&deg;' + UNITS + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
 
     // if ((weather.main.astronomy.sunrise).charAt(3) == ' ') {
     //     weather.main.astronomy.sunrise = weather.main.astronomy.sunrise.slice(0, 2) + "0" + weather.main.astronomy.sunrise.slice(2);
@@ -90,7 +93,7 @@ function displayWeather(weather, forecast, html) {
     // html += '<span class=week>';
     // html += '<table style="height:100%;">';
     // for (var i = 0; i < 5; i++) {
-    //     html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
+    //     html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + UNITS + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
     // }
     // html += '</table></span>';
 
