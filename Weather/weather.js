@@ -73,7 +73,7 @@ function getWeekWeather(weather, html) {
 
 function displayWeather(weather, forecast, html) {
     html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
-    var tempRounded = round(weather.main.temp)
+    var tempRounded = Math.round(weather.main.temp)
     if (tempRounded > 30) {
         html += '<span class="hot"> ' + tempRounded + '&deg;' + units_symbol(UNITS) + '</span></h2>';
     } else if (tempRounded < -10) {
@@ -145,12 +145,12 @@ function getFeelsLike(windspeed, temp, humidity, units) {
             1.99 * Math.pow(10, -6) * tempInF * tempInF * humidity * humidity;
     }
 
-    return round(units === "imperial" ? feelsLike : (feelsLike - 32) * 5 / 9);
+    return Math.round(units === "imperial" ? feelsLike : (feelsLike - 32) * 5 / 9);
 }
 
 function convertUnixTime(unix_timestamp) {
     var date = new Date(unix_timestamp * 1000); // Create a new JavaScript Date object based on the timestamp multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    var hours = date.getHours(); // Hours part from the timestamp  
+    var hours = (date.getHours() > 12 ? date.getHours() - 12 : date.getHours()); // Hours part from the timestamp  
     var minutes = "0" + date.getMinutes(); // Minutes part from the timestamp
 
     return hours + ':' + minutes.substr(-2); // Will display time in 10:30 format
