@@ -75,15 +75,15 @@ function displayWeather(weather, forecast, html) {
     html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
     var tempRounded = Math.round(weather.main.temp)
     if (tempRounded > 30) {
-        html += '<span class="hot"> ' + tempRounded + '&deg;' + units_symbol.UNITS + '</span></h2>';
+        html += '<span class="hot"> ' + tempRounded + '&deg;' + units_symbol[UNITS] + '</span></h2>';
     } else if (tempRounded < -10) {
-        html += '<span class="cold"> ' + tempRounded + '&deg;' + units_symbol.UNITS + '</span></h2>';
+        html += '<span class="cold"> ' + tempRounded + '&deg;' + units_symbol[UNITS] + '</span></h2>';
     } else {
-        html += '' + tempRounded + '&deg;' + units_symbol.UNITS + '</h2>';
+        html += '' + tempRounded + '&deg;' + units_symbol[UNITS] + '</h2>';
     }
     html += '<span class=info>';
     html += '<li class="city">' + weather.name + ', ' + (weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
-    html += '<li class="forecastDescription">' + 'Currently ' + weather.weather[0].main.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, UNITS) + '&deg;' + units_symbol.UNITS + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
+    html += '<li class="forecastDescription">' + 'Currently ' + weather.weather[0].main.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, UNITS) + '&deg;' + units_symbol[UNITS] + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
 
     // if ((weather.main.astronomy.sunrise).charAt(3) == ' ') {
     //     weather.main.astronomy.sunrise = weather.main.astronomy.sunrise.slice(0, 2) + "0" + weather.main.astronomy.sunrise.slice(2);
@@ -98,7 +98,7 @@ function displayWeather(weather, forecast, html) {
     // html += '<span class=week>';
     // html += '<table style="height:100%;">';
     // for (var i = 0; i < 5; i++) {
-    //     html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units_symbol.UNITS + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
+    //     html += '<tr><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '"> ' + weather.forecasts[i].day + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp&nbsp' + weather.forecasts[i].high + '&deg;' + units_symbol[UNITS] + '</td><td class=weekTD><li style="opacity:' + 1 / (i * 1.5) + '">&nbsp<i2 class="wi-yahoo-' + weather.forecasts[i].code + '"></i2></td></tr></li>';
     // }
     // html += '</table></span>';
 
