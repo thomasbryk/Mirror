@@ -2,7 +2,12 @@ const API_KEY = '0059287a1f10d4f818f22bc07882e6ae';
 const UNITS = 'metric';
 const LAT = '45.369910';
 const LON = '-75.701720';
-const ZIP = 'K2C1N5,ca'
+const ZIP = 'K2C1N5,ca';
+
+const units_symbol = {
+    'metric': 'C',
+    'imperial': 'F'
+};
 
 $(document).ready(function() {
     getWeather(); //Get the initial weather.
@@ -124,22 +129,22 @@ function getFontFromConditionCode(weather) {
 }
 
 function getFeelsLike(windspeed, temp, humidity, units) {
-    const windInMph = (this.windUnits === "imperial") ? this.windSpeed : this.windSpeed * 2.23694;
-    const tempInF = this.tempUnits === "imperial" ? this.temperature : this.temperature * 9 / 5 + 32;
+    const windInMph = (units === "imperial") ? windspeed : windspeed * 2.23694;
+    const tempInF = units === "imperial" ? temp : temp * 9 / 5 + 32;
     let feelsLike = tempInF;
 
     if (windInMph > 3 && tempInF < 50) {
         feelsLike = Math.round(35.74 + 0.6215 * tempInF - 35.75 * Math.pow(windInMph, 0.16) + 0.4275 * tempInF * Math.pow(windInMph, 0.16));
-    } else if (tempInF > 80 && this.humidity > 40) {
-        feelsLike = -42.379 + 2.04901523 * tempInF + 10.14333127 * this.humidity -
-            0.22475541 * tempInF * this.humidity - 6.83783 * Math.pow(10, -3) * tempInF * tempInF -
-            5.481717 * Math.pow(10, -2) * this.humidity * this.humidity +
-            1.22874 * Math.pow(10, -3) * tempInF * tempInF * this.humidity +
-            8.5282 * Math.pow(10, -4) * tempInF * this.humidity * this.humidity -
-            1.99 * Math.pow(10, -6) * tempInF * tempInF * this.humidity * this.humidity;
+    } else if (tempInF > 80 && humidity > 40) {
+        feelsLike = -42.379 + 2.04901523 * tempInF + 10.14333127 * humidity -
+            0.22475541 * tempInF * humidity - 6.83783 * Math.pow(10, -3) * tempInF * tempInF -
+            5.481717 * Math.pow(10, -2) * humidity * humidity +
+            1.22874 * Math.pow(10, -3) * tempInF * tempInF * humidity +
+            8.5282 * Math.pow(10, -4) * tempInF * humidity * humidity -
+            1.99 * Math.pow(10, -6) * tempInF * tempInF * humidity * humidity;
     }
 
-    return this.tempUnits === "imperial" ? feelsLike : (feelsLike - 32) * 5 / 9;
+    return units === "imperial" ? feelsLike : (feelsLike - 32) * 5 / 9;
 }
 
 function convertUnixTime(unix_timestamp) {
