@@ -11,8 +11,7 @@ $(document).ready(function() {
 
 function getWeather() {
     var html = "";
-    html += getCurrentWeather(html);
-    $("#weather").html(html);
+    getCurrentWeather(html);
 }
 
 function getCurrentWeather(html) {
@@ -30,10 +29,10 @@ function getCurrentWeather(html) {
             console.log(weather);
             if (weather == null) {
                 html += '<h2>Unable to get current weather.</h2>';
+                $("#weather").html(html);
             } else {
-                html += getWeekWeather(weather, html);
+                getWeekWeather(weather, html);
             }
-            return html;
         },
         error: function(error) {
             return error;
@@ -56,10 +55,10 @@ function getWeekWeather(weather, html) {
             console.log(forecast);
             if (forecast == null) {
                 html += '<h2>Unable to get forecast.</h2>';
+                $("#weather").html(html);
             } else {
-                html += displayWeather(weather, forecast, html);
+                displayWeather(weather, forecast, html);
             }
-            return html;
         },
         error: function(error) {
             return error;
@@ -68,7 +67,7 @@ function getWeekWeather(weather, html) {
 }
 
 function displayWeather(weather, forecast, html) {
-    //html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
+    html += '<h2><i class="' + getFontFromConditionCode(weather) + '"><span style="font-size: 30px;">&nbsp;</span></i>';
     if (weather.main.temp > 30) {
         html += '<span class="hot"> ' + weather.main.temp + '&deg;' + UNITS + '</span></h2>';
     } else if (weather.main.temp < -10) {
@@ -97,7 +96,7 @@ function displayWeather(weather, forecast, html) {
     // }
     // html += '</table></span>';
 
-    return html;
+    $("#weather").html(html);
 }
 
 function getFontFromConditionCode(weather) {
