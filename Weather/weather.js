@@ -16,9 +16,9 @@ function getCurrentWeather(html) {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/weather',
         data: {
-            // lat: '45.369910',
-            // lon: '-75.701720',
-            zip: 'K2C1N5,ca',
+            lat: '45.369910',
+            lon: '-75.701720',
+            // zip: 'K2C1N5,ca',
             units: 'metric',
             APPID: API_KEY
         },
@@ -41,7 +41,9 @@ function getWeekWeather(weather, html) {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/forecast',
         data: {
-            zip: 'K2C1N5,ca',
+            lat: '45.369910',
+            lon: '-75.701720',
+            // zip: 'K2C1N5,ca',
             units: 'metric',
             APPID: API_KEY
         },
