@@ -77,7 +77,7 @@ function displayWeather(weather, forecast, html) {
         html += '' + weather.main.temp + '&deg;' + UNITS + '</h2>';
     }
     html += '<span class=info>';
-    html += '<li class="city">' + weather.name + ', ' + 0(weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
+    html += '<li class="city">' + weather.name + ', ' + (weather.name == "Ottawa" || weather.name == "Niagara Falls" ? 'ON' : weather.sys.country) + '</li>';
     html += '<li class="forecastDescription">' + 'Currently ' + weather.main.description.toLowerCase() + ' and feels like ' + getFeelsLike(weather.wind.speed, weather.main.temp, weather.main.humidity, UNITS) + '&deg;' + UNITS + /*'. Today&#39s forecast is ' + weather.forecasts[0].text.toLowerCase() + */ '.</li>';
 
     // if ((weather.main.astronomy.sunrise).charAt(3) == ' ') {
