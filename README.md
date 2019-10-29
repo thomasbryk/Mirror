@@ -6,3 +6,5 @@ Smart Mirror project, which presents two websites for the date, time, and calend
 - Uses Yahoo Weather API to get the current weather (including the day's forecast description), the sunrise and sunset, and the 5-day forecast.
 ### [Clock/Calendar](https://thomasbryk.github.io/SmartMirror/Clock/)
 - Shows the current date and time, and uses Google Calendar API to get the next 3 upcoming calendar events.
+
+Test
