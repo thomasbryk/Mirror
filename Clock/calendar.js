@@ -114,12 +114,12 @@ function listUpcomingEvents(calID, calendar) {
 }
 
 function IterateOverCalendars(calendars) {
-    for (var i = 0; i < calendars.length; i++) {
-        if (calendars[i].summary == "Friends' Birthdays") {
-            calendars.splice(i, 1);
-            break;
-        }
-    }
+    // for (var i = 0; i < calendars.length; i++) {
+    //     if (calendars[i].summary == "Friends' Birthdays") {
+    //         calendars.splice(i, 1);
+    //         break;
+    //     }
+    // }
     totalEventsCount = calendars.length * maxResults;
     for (var i = 0; i < calendars.length; i++) {
         console.log(calendars[i].summary);
