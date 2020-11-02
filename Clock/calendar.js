@@ -141,15 +141,8 @@ function sortDates(eventCalendarItem1, eventCalendarItem2) {
     var event2 = eventCalendarItem2.event.start;
     var dateEvent1, dateEvent2 = null;
 
-    if (event1.date != null)
-        dateEvent1 = new Date(event1.date);
-    else
-        dateEvent1 = new Date(event1.dateTime);
-
-    if (event2.date != null)
-        dateEvent2 = new Date(event2.date);
-    else
-        dateEvent2 = new Date(event2.dateTime);
+    dateEvent1 = (event1.date != null) ? new Date(event1.date) : new Date(event1.dateTime);
+    dateEvent2 = (event2.date != null) ? new Date(event2.date) : new Date(event2.dateTime);
 
     if (dateEvent1 > dateEvent2)
         return 1;
