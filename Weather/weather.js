@@ -82,3 +82,10 @@ function getWeather() {
         }
     });
 }
+
+function getCurrentDescripton() {
+    return fetch("https://dd.weather.gc.ca/citypage_weather/xml/ON/s0000692_e.xml")
+        .then(response => response.text())
+        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+        .then(data => console.log(data))
+}
