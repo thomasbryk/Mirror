@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    getCurrentDescripton();
     getWeather(); //Get the initial weather.
     setInterval(getWeather, 600000); //Update the weather every 10 minutes.
 });
@@ -82,11 +81,4 @@ function getWeather() {
             $("#weather").html('<li>' + error + '</li>');
         }
     });
-}
-
-function getCurrentDescripton() {
-    return fetch("https://dd.weather.gc.ca/citypage_weather/xml/ON/s0000692_e.xml")
-        .then(response => response.text())
-        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-        .then(data => console.log(data))
 }
